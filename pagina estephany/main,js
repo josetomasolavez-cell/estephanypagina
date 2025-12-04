@@ -1,0 +1,58 @@
+// Esperar a que el documento cargue completamente
+document.addEventListener('DOMContentLoaded', () => {
+
+    /* --- ANIMACIÓN AL HACER SCROLL (Scroll Reveal) --- */
+    // Seleccionamos todos los elementos que tengan la clase 'hidden'
+    const hiddenElements = document.querySelectorAll('.hidden');
+
+    // Creamos un "Observador" que detecta cuando un elemento entra en la pantalla
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+            console.log(entry) // Para depuración
+            // Si el elemento es visible en la pantalla...
+            if (entry.isIntersecting) {
+                // Le añadimos la clase 'show' (definida en CSS)
+                entry.target.classList.add('show'); 
+            } else {
+                // Opcional: si quieres que la animación se repita al subir, quita el comentario de abajo:
+                // entry.target.classList.remove('show');
+            }
+        });
+    });
+
+    // Le decimos al observador que vigile a cada elemento oculto
+    hiddenElements.forEach((el) => observer.observe(el));
+
+
+    /* --- MANEJO DEL FORMULARIO DE REGISTRO --- */
+    const registroForm = document.getElementById('registroForm');
+    
+    if(registroForm) {
+        registroForm.addEventListener('submit', (e) => {
+            e.preventDefault(); // Evita que la página se recargue
+            
+            // Simular un proceso de envío
+            const boton = registroForm.querySelector('button');
+            const textoOriginal = boton.innerText;
+            
+            boton.innerText = "Enviando...";
+            boton.style.background = "#555";
+            
+            setTimeout(() => {
+                alert('¡Bienvenida a Estephany Shop! Te hemos enviado tu cupón al correo.');
+                registroForm.reset();
+                boton.innerText = textoOriginal;
+                boton.style.background = "var(--primary-pink)";
+            }, 1500);
+        });
+    }
+
+    /* --- BOTONES DE COMPRA (Simulación) --- */
+    const buyButtons = document.querySelectorAll('.btn-buy');
+    
+    buyButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            alert('Producto añadido al carrito (Simulación)');
+        });
+    });
+});
